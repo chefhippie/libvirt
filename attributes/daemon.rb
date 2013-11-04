@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: libvirt
-# Recipe:: default
+# Attributes:: daemon
 #
 # Copyright 2013, Thomas Boerger
 #
@@ -17,11 +17,10 @@
 # limitations under the License.
 #
 
-node["libvirt"]["packages"].each do |name|
-  package name do
-    action :install
-  end
-end
+default["libvirt"]["daemon"]["service_name"] = "libvirtd"
+default["libvirt"]["daemon"]["sysconfig_file"] = "/etc/sysconfig/libvirtd"
+default["libvirt"]["daemon"]["config_file"] = "/etc/libvirt/libvirtd.conf"
+default["libvirt"]["daemon"]["libvirt_file"] = "/etc/libvirt/libvirt.conf"
 
-include_recipe "libvirt::daemon"
-include_recipe "libvirt::guests"
+default["libvirt"]["daemon"]["uri_aliases"] = []
+default["libvirt"]["daemon"]["uri_default"] = "qemu:///system"

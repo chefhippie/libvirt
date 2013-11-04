@@ -1,0 +1,21 @@
+<network>
+  <name><%= @name %></name>
+  <% if @uuid %><uuid><%= @uuid %></uuid><% end -%>
+
+  <% if @mac %><mac address='<%= @mac %>' /><% end -%>
+  <bridge name='<%= @bridge %>' stp='off' delay='0' />
+
+  <ip address='<%= @ip %>' netmask='<%= @netmask %>'>
+    <% if @dhcp_enable %>
+      <dhcp>
+        <range start='<%= @dhcp_start %>' end='<%= @dhcp_end %>' />
+        <% @dhcp_hosts.each do |dhcp_host| %>
+          <host mac='<%= dhcp_host["mac"] %>' name='<%= dhcp_host["name"] %>' ip='<%= dhcp_host["ip"] %>' />
+        <% end -%>
+      </dhcp>
+    <% end -%>
+  </ip>
+
+  <forward mode='nat'>
+  </forward>
+</network>

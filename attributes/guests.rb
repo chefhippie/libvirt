@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: libvirt
-# Recipe:: default
+# Attributes:: guests
 #
 # Copyright 2013, Thomas Boerger
 #
@@ -17,11 +17,5 @@
 # limitations under the License.
 #
 
-node["libvirt"]["packages"].each do |name|
-  package name do
-    action :install
-  end
-end
-
-include_recipe "libvirt::daemon"
-include_recipe "libvirt::guests"
+default["libvirt"]["guests"]["service_name"] = "libvirt-guests"
+default["libvirt"]["guests"]["sysconfig_file"] = "/etc/sysconfig/libvirt-guests"

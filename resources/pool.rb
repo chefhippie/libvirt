@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: libvirt
-# Recipe:: default
+# Resource:: pool
 #
 # Copyright 2013, Thomas Boerger
 #
@@ -17,11 +17,10 @@
 # limitations under the License.
 #
 
-node["libvirt"]["packages"].each do |name|
-  package name do
-    action :install
-  end
-end
+actions :create, :define, :destroy, :start, :undefine
 
-include_recipe "libvirt::daemon"
-include_recipe "libvirt::guests"
+attribute :name, :kind_of => String, :name_attribute => true
+
+
+
+default_action :create
