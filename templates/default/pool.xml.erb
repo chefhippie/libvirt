@@ -1,0 +1,38 @@
+<pool type='<%= @type %>'>
+  <name><%= @name %></name>
+  <% if @uuid %><uuid><%= @uuid %></uuid><% end -%>
+
+  <capacity unit='bytes'><%= @capacity %></capacity>
+  <allocation unit='bytes'><%= @allocation %></allocation>
+  <available unit='bytes'><%= @available %></available>
+
+  <% if @type == "dir" -%>
+    <source>
+    </source>
+  <% end -%>
+
+  <% if @type == "logical" -%>
+    <source>
+      <device path='<%= @device %>'/>
+      <name><%= @volume %></name>
+      <format type='lvm2'/>
+    </source>
+  <% end -%>
+
+  <% if @type == "logical" -%>
+    <source>
+      <host name='<%= @host %>'/>
+      <dir path='<%= @dir %>'/>
+      <format type='auto'/>
+    </source>
+  <% end -%>
+
+  <target>
+    <path><%= @target %></path>
+    <permissions>
+      <mode><%= @mode %></mode>
+      <owner><%= @owner %></owner>
+      <group><%= @group %></group>
+    </permissions>
+  </target>
+</pool>

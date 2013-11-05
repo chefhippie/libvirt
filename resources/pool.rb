@@ -17,10 +17,21 @@
 # limitations under the License.
 #
 
-actions :create, :define, :destroy, :start, :undefine
+actions :create, :define, :destroy, :delete, :start, :undefine, :build, :refresh, :autoboot, :noboot
 
 attribute :name, :kind_of => String, :name_attribute => true
-
-
+attribute :uuid, :kind_of => String, :default => nil
+attribute :type, :kind_of => String, :default => nil
+attribute :target, :kind_of => String, :default => nil
+attribute :device, :kind_of => String, :default => nil
+attribute :volume, :kind_of => String, :default => nil
+attribute :host, :kind_of => String, :default => nil
+attribute :dir, :kind_of => String, :default => nil
+attribute :mode, :kind_of => String, :default => "0755"
+attribute :owner, :kind_of => Integer, :default => -1
+attribute :group, :kind_of => Integer, :default => -1
+attribute :capacity, :kind_of => Integer, :default => 0
+attribute :allocation, :kind_of => Integer, :default => 0
+attribute :available, :kind_of => Integer, :default => 0
 
 default_action :create
