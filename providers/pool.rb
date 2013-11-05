@@ -240,6 +240,24 @@ end
 
 protected
 
+def create_xml_path
+  @create_xml_path ||= begin
+    ::File.join(
+      Chef::Config[:file_cache_path],
+      "virsh_pool_create_#{new_resource.name}.xml"
+    )
+  end
+end
+
+def define_xml_path
+  @create_xml_path ||= begin
+    ::File.join(
+      Chef::Config[:file_cache_path],
+      "virsh_pool_define_#{new_resource.name}.xml"
+    )
+  end
+end
+
 def all_include?(name)
   listing_include? "--all", name
 end
