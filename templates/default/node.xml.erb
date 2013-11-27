@@ -31,7 +31,6 @@
         <driver name='qemu' type='<%= disk["driver_type"] %>' cache='none'/>
         <target dev='<%= disk["target"] %>' bus='ide'/>
         <source <%= disk["source_type"] %>='<%= disk["source"] %>'/>
-        <boot order='<%= index + 1 %>'/>
       </disk>
     <% end %>
 
@@ -44,7 +43,6 @@
           <target dev='<%= interface["target"] %>'/>
         <% end -%>
         <source <%= interface["source_type"] %>='<%= interface["source"] %>'/>
-        <boot order='<%= index + 1 %>'/>
         <model type='virtio'/>
       </interface>
     <% end %>
