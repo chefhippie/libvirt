@@ -205,7 +205,11 @@ def extended_disks
       end.run_action(:create_if_missing)
     end
 
-    unless ::File.exists? disk["target"]
+    case disk["type"]
+    when "block"
+      disk["driver_type"] = "raw"
+      disk["source_type"] = "dev"
+    when "file"
       execute "libvirt_image_create_#{disk["target"]}" do
         command "qemu-img create -f qcow2 #{disk["target"]} #{disk["size"] || 30}"
         action :nothing
@@ -213,17 +217,11 @@ def extended_disks
         user "root"
         group "root"
 
-        only_if do
-          ::File.extname(disk["target"]) == ".qcow2"
+        not_if do
+          ::File.exists? disk["target"]
         end
       end.run_action(:run)
-    end
 
-    case disk["type"]
-    when "block"
-      disk["driver_type"] = "raw"
-      disk["source_type"] = "dev"
-    when "file"
       disk["driver_type"] = "qcow2"
       disk["source_type"] = "file"
     end
