@@ -197,7 +197,9 @@ def define_xml_path
 end
 
 def extended_disks
-  new_resource.disks.dup.map do |disk|
+  disks = new_resource.disks.dup
+
+  disks.map do |disk|
     if disk["download"]
       remote_file disk["source"] do
         source disk["download"]
@@ -231,7 +233,9 @@ def extended_disks
 end
 
 def extended_interfaces
-  new_resource.interfaces.dup.map do |interface|
+  interfaces = new_resource.interfaces.dup
+
+  interfaces.map do |interface|
     case interface["type"]
     when "bridge"
       interface["source_type"] = "bridge"
