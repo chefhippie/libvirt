@@ -199,7 +199,7 @@ end
 def extended_disks
   new_resource.disks.map do |disk|
     if disk["download"]
-      remote_file disk["target"] do
+      remote_file disk["source"] do
         source disk["download"]
         action :nothing
       end.run_action(:create_if_missing)
@@ -210,15 +210,15 @@ def extended_disks
       disk["driver_type"] = "raw"
       disk["source_type"] = "dev"
     when "file"
-      execute "libvirt_image_create_#{disk["target"]}" do
-        command "qemu-img create -f qcow2 #{disk["target"]} #{disk["size"] || 30}"
+      execute "libvirt_image_create_#{disk["source"]}" do
+        command "qemu-img create -f qcow2 #{disk["source"]} #{disk["size"] || 30}"
         action :nothing
 
         user "root"
         group "root"
 
         not_if do
-          ::File.exists? disk["target"]
+          ::File.exists? disk["source"]
         end
       end.run_action(:run)
 
