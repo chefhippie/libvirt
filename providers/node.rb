@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: libvirt
-# Provider:: network
+# Provider:: node
 #
 # Copyright 2013, Thomas Boerger
 #
@@ -27,27 +27,24 @@ action :create do
     mode 0640
 
     cookbook "libvirt"
-    source "network.xml.erb"
+    source "node.xml.erb"
 
     variables(
       "name" => new_resource.name,
       "uuid" => new_resource.uuid,
-      "mac" => new_resource.mac,
-      "bridge" => new_resource.bridge,
-      "ip" => new_resource.ip,
-      "netmask" => new_resource.netmask,
-      "dhcp_enable" => new_resource.dhcp_enable,
-      "dhcp_start" => new_resource.dhcp_start,
-      "dhcp_end" => new_resource.dhcp_end,
-      "dhcp_hosts" => new_resource.dhcp_hosts
+      "memory" => new_resource.memory,
+      "cpus" => new_resource.cpus,
+      "vnc" => new_resource.vnc,
+      "disks" => extended_disks,
+      "interfaces" => extended_interfaces
     )
 
-    notifies :run, "bash[virsh_net_create_#{new_resource.name}]", :immediately
+    notifies :run, "bash[virsh_node_create_#{new_resource.name}]", :immediately
   end
 
-  bash "virsh_net_create_#{new_resource.name}" do
+  bash "virsh_node_create_#{new_resource.name}" do
     code <<-EOH
-      virsh net-create #{create_xml_path}
+      virsh create #{create_xml_path}
     EOH
 
     action :run
@@ -68,27 +65,24 @@ action :define do
     mode 0640
 
     cookbook "libvirt"
-    source "network.xml.erb"
+    source "node.xml.erb"
 
     variables(
       "name" => new_resource.name,
       "uuid" => new_resource.uuid,
-      "mac" => new_resource.mac,
-      "bridge" => new_resource.bridge,
-      "ip" => new_resource.ip,
-      "netmask" => new_resource.netmask,
-      "dhcp_enable" => new_resource.dhcp_enable,
-      "dhcp_start" => new_resource.dhcp_start,
-      "dhcp_end" => new_resource.dhcp_end,
-      "dhcp_hosts" => new_resource.dhcp_hosts
+      "memory" => new_resource.memory,
+      "cpus" => new_resource.cpus,
+      "vnc" => new_resource.vnc,
+      "disks" => extended_disks,
+      "interfaces" => extended_interfaces
     )
 
-    notifies :run, "bash[virsh_net_define_#{new_resource.name}]", :immediately
+    notifies :run, "bash[virsh_node_define_#{new_resource.name}]", :immediately
   end
 
-  bash "virsh_net_define_#{new_resource.name}" do
+  bash "virsh_node_define_#{new_resource.name}" do
     code <<-EOH
-      virsh net-define #{define_xml_path}
+      virsh define #{define_xml_path}
     EOH
 
     action :run
@@ -104,9 +98,9 @@ end
 
 action :undefine do
   if inactive_include? new_resource.name
-    bash "virsh_net_undefine_#{new_resource.name}" do
+    bash "virsh_node_undefine_#{new_resource.name}" do
       code <<-EOH
-        virsh net-undefine #{new_resource.name}
+        virsh undefine #{new_resource.name}
       EOH
 
       action :run
@@ -114,15 +108,15 @@ action :undefine do
 
     new_resource.updated_by_last_action(true)
   else
-    Chef::Log.debug "Can't undefine, network #{new_resource.name} is not in inactive list"
+    Chef::Log.debug "Can't undefine, node #{new_resource.name} is not in inactive list"
   end
 end
 
 action :start do
   if inactive_include? new_resource.name
-    bash "virsh_net_start_#{new_resource.name}" do
+    bash "virsh_node_start_#{new_resource.name}" do
       code <<-EOH
-        virsh net-start #{new_resource.name}
+        virsh start #{new_resource.name}
       EOH
 
       action :run
@@ -130,15 +124,15 @@ action :start do
 
     new_resource.updated_by_last_action(true)
   else
-    Chef::Log.debug "Can't start, network #{new_resource.name} is not in inactive list"
+    Chef::Log.debug "Can't start, node #{new_resource.name} is not in inactive list"
   end
 end
 
 action :destroy do
   if active_include? new_resource.name
-    bash "virsh_net_destroy_#{new_resource.name}" do
+    bash "virsh_node_destroy_#{new_resource.name}" do
       code <<-EOH
-        virsh net-destroy #{new_resource.name}
+        virsh destroy #{new_resource.name}
       EOH
 
       action :run
@@ -146,15 +140,15 @@ action :destroy do
 
     new_resource.updated_by_last_action(true)
   else
-    Chef::Log.debug "Can't destroy, network #{new_resource.name} is not in active list"
+    Chef::Log.debug "Can't destroy, node #{new_resource.name} is not in active list"
   end
 end
 
 action :autoboot do
   if noboot_include? new_resource.name
-    bash "virsh_net_autoboot_#{new_resource.name}" do
+    bash "virsh_node_autoboot_#{new_resource.name}" do
       code <<-EOH
-        virsh net-autostart #{new_resource.name}
+        virsh autostart #{new_resource.name}
       EOH
 
       action :run
@@ -162,15 +156,15 @@ action :autoboot do
 
     new_resource.updated_by_last_action(true)
   else
-    Chef::Log.debug "Can't autoboot, network #{new_resource.name} is not in noboot list"
+    Chef::Log.debug "Can't autoboot, node #{new_resource.name} is not in noboot list"
   end
 end
 
 action :noboot do
   if autoboot_include? new_resource.name
-    bash "virsh_net_noboot_#{new_resource.name}" do
+    bash "virsh_node_noboot_#{new_resource.name}" do
       code <<-EOH
-        virsh net-autostart #{new_resource.name} --disable
+        virsh autostart #{new_resource.name} --disable
       EOH
 
       action :run
@@ -178,7 +172,7 @@ action :noboot do
 
     new_resource.updated_by_last_action(true)
   else
-    Chef::Log.debug "Can't noboot, network #{new_resource.name} is not in autoboot list"
+    Chef::Log.debug "Can't noboot, node #{new_resource.name} is not in autoboot list"
   end
 end
 
@@ -188,7 +182,7 @@ def create_xml_path
   @create_xml_path ||= begin
     ::File.join(
       Chef::Config[:file_cache_path],
-      "virsh_net_create_#{new_resource.name}.xml"
+      "virsh_node_create_#{new_resource.name}.xml"
     )
   end
 end
@@ -197,8 +191,39 @@ def define_xml_path
   @create_xml_path ||= begin
     ::File.join(
       Chef::Config[:file_cache_path],
-      "virsh_net_define_#{new_resource.name}.xml"
+      "virsh_node_define_#{new_resource.name}.xml"
     )
+  end
+end
+
+def extended_disks
+  new_resource.disks.map do |disk|
+    if disk["download"]
+      remote_file disk["target"] do
+        source disk["download"]
+        action :none
+      end.run_action(:create_if_missing)
+    end
+
+    case disk["type"]
+    when "block"
+      disk["driver_type"] = "raw"
+      disk["source_type"] = "dev"
+    when "file"
+      disk["driver_type"] = "qcow2"
+      disk["source_type"] = "file"
+    end
+  end
+end
+
+def extended_interfaces
+  new_resource.interfaces.map do |interface|
+    case interface["type"]
+    when "bridge"
+      interface["source_type"] = "bridge"
+    when "network"
+      interface["source_type"] = "network"
+    end
   end
 end
 
@@ -223,5 +248,5 @@ def active_include?(name)
 end
 
 def listing_include?(flag, name)
-  `virsh net-list #{flag} | grep #{name} | wc -l`.strip != "0"
+  `virsh list #{flag} | grep #{name} | wc -l`.strip != "0"
 end

@@ -1,0 +1,54 @@
+<domain>
+  <name><%= @name %></name>
+  <% if @uuid %><uuid><%= @uuid %></uuid><% end -%>
+
+  <memory unit='MB'><%= @memory %></memory>
+  <currentMemory unit='MB'><%= @memory %></currentMemory>
+
+  <vcpu><%= @cpus %></vcpu>
+
+  <os>
+    <type arch='x86_64' machine='pc-1.3'>hvm</type>
+    <boot dev='network'/>
+    <boot dev='hd'/>
+  </os>
+
+  <features>
+    <acpi/>
+    <apic/>
+    <pae/>
+  </features>
+
+  <clock offset='utc' />
+  <on_poweroff>preserve</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+
+  <devices>
+    <emulator>/usr/bin/qemu-kvm</emulator>
+    <% @disks.each_with_index do |disk, index| %>
+      <disk type='<%= disk["type"] %>' device='disk'>
+        <driver name='qemu' type='<%= disk["driver_type"] %>' cache='none'/>
+        <target dev='<%= disk["target"] %>' bus='ide'/>
+        <source <%= disk["source_type"] %>='<%= disk["source"] %>'/>
+        <boot order='<%= index + 1 %>'/>
+      </disk>
+    <% end %>
+
+    <% @interfaces.each_with_index do |interface, index| %>
+      <interface type='<%= interface["type"] %>'>
+        <% if interface["mac"] -%>
+          <mac address='<%= interface["mac"] %>'/>
+        <% end -%>
+        <% if interface["target"] -%>
+          <target dev='<%= interface["target"] %>'/>
+        <% end -%>
+        <source <%= interface["source_type"] %>='<%= interface["source"] %>'/>
+        <boot order='<%= index + 1 %>'/>
+        <model type='virtio'/>
+      </interface>
+    <% end %>
+
+    <graphics type='vnc' port='<%= @vnc || -1 %>' autoport='yes'/>
+  </devices>
+</domain>

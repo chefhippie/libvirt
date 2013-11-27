@@ -8,7 +8,9 @@
   <ip address='<%= @ip %>' netmask='<%= @netmask %>'>
     <% if @dhcp_enable %>
       <dhcp>
-        <range start='<%= @dhcp_start %>' end='<%= @dhcp_end %>' />
+        <% if @dhcp_start and @dhcp_end -%>
+          <range start='<%= @dhcp_start %>' end='<%= @dhcp_end %>' />
+        <% end -%>
         <% @dhcp_hosts.each do |dhcp_host| %>
           <host mac='<%= dhcp_host["mac"] %>' name='<%= dhcp_host["name"] %>' ip='<%= dhcp_host["ip"] %>' />
         <% end -%>
