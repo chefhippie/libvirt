@@ -1,6 +1,6 @@
-<domain>
+<domain type='kvm'>
   <name><%= @name %></name>
-  <% if @uuid %><uuid><%= @uuid %></uuid><% end -%>
+  <% if @uuid -%><uuid><%= @uuid %></uuid><% end -%>
 
   <memory unit='MB'><%= @memory %></memory>
   <currentMemory unit='MB'><%= @memory %></currentMemory>
