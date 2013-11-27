@@ -201,7 +201,7 @@ def extended_disks
     if disk["download"]
       remote_file disk["target"] do
         source disk["download"]
-        action :none
+        action :nothing
       end.run_action(:create_if_missing)
     end
 
