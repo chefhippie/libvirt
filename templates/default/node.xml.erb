@@ -29,7 +29,7 @@
     <% @disks.each_with_index do |disk, index| %>
       <disk type='<%= disk["type"] %>' device='disk'>
         <driver name='qemu' type='<%= disk["driver_type"] %>' cache='none'/>
-        <target dev='<%= disk["target"] %>' bus='ide'/>
+        <target dev='<%= disk["target"] %>' bus='virtio'/>
         <source <%= disk["source_type"] %>='<%= disk["source"] %>'/>
       </disk>
     <% end %>
