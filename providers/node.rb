@@ -213,7 +213,7 @@ def extended_disks
       disk["source_type"] = "dev"
     when "file"
       execute "libvirt_image_create_#{disk["source"]}" do
-        command "qemu-img create -f qcow2 #{disk["source"]} #{disk["size"] || 30}"
+        command "qemu-img create -f qcow2 #{disk["source"]} #{disk["size"] || "30G"}"
         action :nothing
 
         user "root"
