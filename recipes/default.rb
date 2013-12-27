@@ -27,3 +27,63 @@ end
 
 include_recipe "libvirt::daemon"
 include_recipe "libvirt::guests"
+
+node["libvirt"]["networks"].each do |name, data|
+  (data["action"] ? data["action"].map(&:to_sym) : [:define]).each do |current_action|
+    libvirt_network name do
+      uuid data["uuid"]
+      mac data["mac"]
+      bridge data["bridge"]
+      ip data["ip"]
+      netmask data["netmask"]
+
+      dhcp_enable data["dhcp_enable"]
+      dhcp_start data["dhcp_start"]
+      dhcp_end data["dhcp_end"]
+      dhcp_hosts data["dhcp_hosts"]
+
+      action current_action
+    end
+  end
+end
+
+node["libvirt"]["nodes"].each do |name, data|
+  (data["action"] ? data["action"].map(&:to_sym) : [:define]).each do |current_action|
+    libvirt_node name do
+      memory data["memory"]
+      cpus data["cpus"]
+      vnc data["vnc"]
+
+      disks data["disks"]
+      interfaces data["interfaces"]
+
+      action current_action
+    end
+  end
+end
+
+node["libvirt"]["pools"].each do |name, data|
+  (data["action"] ? data["action"].map(&:to_sym) : [:define]).each do |current_action|
+    libvirt_pool name do
+      uuid data["uuid"]
+      type data["type"]
+      target data["target"]
+
+      device data["device"]
+      volume data["volume"]
+
+      host data["host"]
+      dir data["dir"]
+
+      mode data["mode"]
+      owner data["owner"]
+      group data["group"]
+
+      capacity data["capacity"]
+      allocation data["allocation"]
+      available data["available"]
+
+      action current_action
+    end
+  end
+end

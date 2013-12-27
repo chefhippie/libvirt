@@ -38,3 +38,7 @@ default["libvirt"]["packages"] = value_for_platform_family(
     ebtables
   )
 )
+
+default["libvirt"]["networks"] = {}
+default["libvirt"]["nodes"] = {}
+default["libvirt"]["pools"] = {}
