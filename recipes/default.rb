@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+include_recipe "network"
+
 node["libvirt"]["packages"].each do |name|
   package name do
     action :install

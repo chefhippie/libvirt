@@ -17,8 +17,24 @@
 # limitations under the License.
 #
 
-default["libvirt"]["packages"] = %w(
-  libvirt
-  libvirt-client
-  libvirt-devel
+default["libvirt"]["packages"] = value_for_platform_family(
+  "debian" => %w(
+    libvirt-bin
+    libvirt-dev
+    lvm2
+  ),
+  "ubuntu" => %w(
+    libvirt-bin
+    libvirt-dev
+    lvm2
+  ),
+  "suse" => %w(
+    libvirt
+    libvirt-client
+    libvirt-devel
+    lvm2
+    bridge-utils
+    dnsmasq
+    ebtables
+  )
 )

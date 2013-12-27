@@ -17,5 +17,13 @@
 # limitations under the License.
 #
 
-default["libvirt"]["guests"]["service_name"] = "libvirt-guests"
-default["libvirt"]["guests"]["sysconfig_file"] = "/etc/sysconfig/libvirt-guests"
+default["libvirt"]["guests"]["service_name"] = value_for_platform_family(
+  "debian" => "libvirt-guests",
+  "ubuntu" => "libvirt-guests",
+  "suse" => "libvirt-guests"
+)
+default["libvirt"]["guests"]["sysconfig_file"] = value_for_platform_family(
+  "debian" => "/etc/default/libvirt-bin",
+  "ubuntu" => "/etc/default/libvirt-bin",
+  "suse" => "/etc/sysconfig/libvirt-guests"
+)
