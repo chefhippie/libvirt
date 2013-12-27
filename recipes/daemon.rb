@@ -28,6 +28,10 @@ template node["libvirt"]["daemon"]["sysconfig_file"] do
   )
 
   notifies :restart, "service[libvirt-daemon]"
+  
+  not_if do
+    node["libvirt"]["daemon"]["sysconfig_file"].empty?
+  end
 end
 
 template node["libvirt"]["daemon"]["config_file"] do
@@ -41,6 +45,10 @@ template node["libvirt"]["daemon"]["config_file"] do
   )
 
   notifies :restart, "service[libvirt-daemon]"
+  
+  not_if do
+    node["libvirt"]["daemon"]["config_file"].empty?
+  end
 end
 
 template node["libvirt"]["daemon"]["libvirt_file"] do
@@ -54,6 +62,10 @@ template node["libvirt"]["daemon"]["libvirt_file"] do
   )
 
   notifies :restart, "service[libvirt-daemon]"
+  
+  not_if do
+    node["libvirt"]["daemon"]["libvirt_file"].empty?
+  end
 end
 
 service "libvirt-daemon" do

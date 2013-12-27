@@ -28,6 +28,10 @@ template node["libvirt"]["guests"]["sysconfig_file"] do
   )
 
   notifies :restart, "service[libvirt-guests]"
+  
+  not_if do
+    node["libvirt"]["guests"]["sysconfig_file"].empty?
+  end
 end
 
 service "libvirt-guests" do
