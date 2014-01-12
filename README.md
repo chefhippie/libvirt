@@ -62,8 +62,7 @@ default["libvirt"]["pools"] => {
   "cloud" => {
     "action" => %w(define start autoboot),
     "type" => "logical",
-    "target" => "/dev/system",
-    "device" => "/dev/sda2",
+    "target" => "/dev/sda2",
     "volume" => "system"
   }
 
