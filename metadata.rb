@@ -6,6 +6,7 @@ description "Installs/Configures libvirt"
 long_description IO.read(File.join(File.dirname(__FILE__), "README.md"))
 version "0.0.1"
 depends "network"
+depends "openssl"
 recipe "libvirt", "Installs/Configures libvirt"
 
 supports "suse", ">= 12.3"

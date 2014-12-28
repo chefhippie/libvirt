@@ -25,6 +25,7 @@ node["libvirt"]["packages"].each do |name|
   end
 end
 
+include_recipe "libvirt::cert"
 include_recipe "libvirt::daemon"
 include_recipe "libvirt::guests"
 

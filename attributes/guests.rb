@@ -18,12 +18,12 @@
 #
 
 default["libvirt"]["guests"]["service_name"] = value_for_platform_family(
-  "debian" => "libvirt-guests",
-  "ubuntu" => "libvirt-guests",
+  "debian" => "",
+  "ubuntu" => "",
   "suse" => "libvirt-guests"
 )
 default["libvirt"]["guests"]["sysconfig_file"] = value_for_platform_family(
-  "debian" => "/etc/default/libvirt-bin",
-  "ubuntu" => "/etc/default/libvirt-bin",
+  "debian" => "",
+  "ubuntu" => "",
   "suse" => "/etc/sysconfig/libvirt-guests"
 )

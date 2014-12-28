@@ -37,4 +37,8 @@ end
 service "libvirt-guests" do
   service_name node["libvirt"]["guests"]["service_name"]
   action [:enable, :start]
+  
+  not_if do
+    node["libvirt"]["guests"]["service_name"].empty?
+  end
 end
