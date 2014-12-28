@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+include_recipe "openssl"
+
 openssl_cert "libvirt" do
   source node["libvirt"]["cert"]["source"]
   owner node["libvirt"]["cert"]["owner"]
