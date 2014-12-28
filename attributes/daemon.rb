@@ -61,7 +61,7 @@ default["libvirt"]["daemon"]["qemu"]["security_require_confined"] = 0
 default["libvirt"]["daemon"]["qemu"]["vnc_listen"] = "127.0.0.1"
 default["libvirt"]["daemon"]["qemu"]["vnc_auto_unix_socket"] = true
 default["libvirt"]["daemon"]["qemu"]["vnc_tls"] = false
-default["libvirt"]["daemon"]["qemu"]["vnc_tls_x509_cert_dir"] = "/etc/pki/libvirt-vnc"
+default["libvirt"]["daemon"]["qemu"]["vnc_tls_x509_cert_dir"] = "#{node["openssl"]["cert_path"]}/libvirt-vnc"
 default["libvirt"]["daemon"]["qemu"]["vnc_tls_x509_verify"] = true
 default["libvirt"]["daemon"]["qemu"]["vnc_password"] = (0...8).map { (65 + rand(26)).chr }.join
 default["libvirt"]["daemon"]["qemu"]["vnc_sasl"] = false
@@ -69,7 +69,7 @@ default["libvirt"]["daemon"]["qemu"]["vnc_sasl_dir"] = "/some/directory/sasl"
 default["libvirt"]["daemon"]["qemu"]["vnc_allow_host_audio"] = false
 default["libvirt"]["daemon"]["qemu"]["spice_listen"] = "127.0.0.1"
 default["libvirt"]["daemon"]["qemu"]["spice_tls"] = false
-default["libvirt"]["daemon"]["qemu"]["spice_tls_x509_cert_dir"] = "/etc/pki/libvirt-spice"
+default["libvirt"]["daemon"]["qemu"]["spice_tls_x509_cert_dir"] = "#{node["openssl"]["cert_path"]}/libvirt-spice"
 default["libvirt"]["daemon"]["qemu"]["spice_password"] = (0...8).map { (65 + rand(26)).chr }.join
 
 default["libvirt"]["daemon"]["qemulockd_file"] = "/etc/libvirt/qemu-lockd.conf"
