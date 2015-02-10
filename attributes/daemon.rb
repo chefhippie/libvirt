@@ -19,14 +19,14 @@
 
 default["libvirt"]["daemon"]["service_name"] = value_for_platform_family(
   "debian" => "libvirt-bin",
-  "ubuntu" => "libvirt-bin",
   "suse" => "libvirtd"
 )
+
 default["libvirt"]["daemon"]["sysconfig_file"] = value_for_platform_family(
   "debian" => "/etc/default/libvirt-bin",
-  "ubuntu" => "/etc/default/libvirt-bin",
   "suse" => "/etc/sysconfig/libvirtd"
 )
+
 default["libvirt"]["daemon"]["config_file"] = "/etc/libvirt/libvirtd.conf"
 default["libvirt"]["daemon"]["libvirt_file"] = "/etc/libvirt/libvirt.conf"
 default["libvirt"]["daemon"]["uri_aliases"] = []

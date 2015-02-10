@@ -23,11 +23,6 @@ default["libvirt"]["packages"] = value_for_platform_family(
     libvirt-dev
     lvm2
   ),
-  "ubuntu" => %w(
-    libvirt-bin
-    libvirt-dev
-    lvm2
-  ),
   "suse" => %w(
     libvirt
     libvirt-client
