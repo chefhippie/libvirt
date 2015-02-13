@@ -28,7 +28,7 @@ template node["libvirt"]["daemon"]["sysconfig_file"] do
   )
 
   notifies :restart, "service[libvirt-daemon]"
-  
+
   not_if do
     node["libvirt"]["daemon"]["sysconfig_file"].empty?
   end
@@ -45,7 +45,7 @@ template node["libvirt"]["daemon"]["config_file"] do
   )
 
   notifies :restart, "service[libvirt-daemon]"
-  
+
   not_if do
     node["libvirt"]["daemon"]["config_file"].empty?
   end
@@ -62,7 +62,7 @@ template node["libvirt"]["daemon"]["libvirt_file"] do
   )
 
   notifies :restart, "service[libvirt-daemon]"
-  
+
   not_if do
     node["libvirt"]["daemon"]["libvirt_file"].empty?
   end
@@ -79,14 +79,14 @@ template node["libvirt"]["daemon"]["lxc_file"] do
   )
 
   notifies :restart, "service[libvirt-daemon]"
-  
+
   not_if do
     node["libvirt"]["daemon"]["lxc_file"].empty?
   end
 end
 
 template node["libvirt"]["daemon"]["qemu_file"] do
-  source "lxc.conf.erb"
+  source "qemu.conf.erb"
   owner "root"
   group "root"
   mode 0644
@@ -96,14 +96,14 @@ template node["libvirt"]["daemon"]["qemu_file"] do
   )
 
   notifies :restart, "service[libvirt-daemon]"
-  
+
   not_if do
     node["libvirt"]["daemon"]["qemu_file"].empty?
   end
 end
 
 template node["libvirt"]["daemon"]["qemulockd_file"] do
-  source "lxc.conf.erb"
+  source "qemulockd.conf.erb"
   owner "root"
   group "root"
   mode 0644
@@ -113,14 +113,14 @@ template node["libvirt"]["daemon"]["qemulockd_file"] do
   )
 
   notifies :restart, "service[libvirt-daemon]"
-  
+
   not_if do
     node["libvirt"]["daemon"]["qemulockd_file"].empty?
   end
 end
 
 template node["libvirt"]["daemon"]["virtlockd_file"] do
-  source "lxc.conf.erb"
+  source "virtlockd.conf.erb"
   owner "root"
   group "root"
   mode 0644
@@ -130,7 +130,7 @@ template node["libvirt"]["daemon"]["virtlockd_file"] do
   )
 
   notifies :restart, "service[libvirt-daemon]"
-  
+
   not_if do
     node["libvirt"]["daemon"]["virtlockd_file"].empty?
   end
