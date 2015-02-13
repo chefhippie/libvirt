@@ -22,6 +22,7 @@ actions :create, :define, :destroy, :start, :undefine, :autoboot, :noboot
 attribute :name, :kind_of => String, :name_attribute => true
 attribute :uuid, :kind_of => String, :default => nil
 attribute :mac, :kind_of => String, :default => nil
+attribute :domain, :kind_of => String, :default => nil
 attribute :bridge, :kind_of => String, :default => "virbr1"
 attribute :ip, :kind_of => String, :default => "192.168.0.1"
 attribute :netmask, :kind_of => String, :default => "255.255.0.0"
@@ -29,5 +30,8 @@ attribute :dhcp_enable, :kind_of => [TrueClass, FalseClass], :default => false
 attribute :dhcp_start, :kind_of => String, :default => nil
 attribute :dhcp_end, :kind_of => String, :default => nil
 attribute :dhcp_hosts, :kind_of => Array, :default => []
+attribute :dns_enable, :kind_of => [TrueClass, FalseClass], :default => false
+attribute :dns_forwarders, :kind_of => Array, :default => []
+attribute :dns_hosts, :kind_of => Array, :default => []
 
 default_action :create

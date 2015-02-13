@@ -34,6 +34,7 @@ node["libvirt"]["networks"].each do |name, data|
     libvirt_network name do
       uuid data["uuid"]
       mac data["mac"]
+      domain data["domain"]
       bridge data["bridge"]
       ip data["ip"]
       netmask data["netmask"]
@@ -42,6 +43,10 @@ node["libvirt"]["networks"].each do |name, data|
       dhcp_start data["dhcp_start"]
       dhcp_end data["dhcp_end"]
       dhcp_hosts data["dhcp_hosts"]
+
+      dns_enable data["dns_enable"]
+      dns_forwarders data["dns_forwarders"]
+      dns_hosts data["dns_hosts"]
 
       action current_action
     end

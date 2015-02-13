@@ -3,7 +3,23 @@
   <% if @uuid %><uuid><%= @uuid %></uuid><% end -%>
 
   <% if @mac %><mac address='<%= @mac %>' /><% end -%>
+  <% if @domain %><domain name='<%= @domain %>' /><% end -%>
   <bridge name='<%= @bridge %>' stp='off' delay='0' />
+
+  <% if @dns_enable -%>
+    <dns>
+      <% @dns_forwarders.each do |dns_forwarder| -%>
+        <forwarder addr='<%= dns_forwarder %>' />
+      <% end -%>
+      <% @dns_hosts.each do |dns_host| -%>
+        <host ip='<%= dns_host["ip"] %>'>
+          <% dns_host["names"].each do |name| -%>
+            <hostname><%= name %></hostname>
+          <% end -%>
+        </host>
+      <% end -%>
+    </dns>
+  <% end -%>
 
   <ip address='<%= @ip %>' netmask='<%= @netmask %>'>
     <% if @dhcp_enable %>

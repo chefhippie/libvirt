@@ -33,13 +33,17 @@ action :create do
       "name" => new_resource.name,
       "uuid" => new_resource.uuid,
       "mac" => new_resource.mac,
+      "domain" => new_resource.domain,
       "bridge" => new_resource.bridge,
       "ip" => new_resource.ip,
       "netmask" => new_resource.netmask,
       "dhcp_enable" => new_resource.dhcp_enable,
       "dhcp_start" => new_resource.dhcp_start,
       "dhcp_end" => new_resource.dhcp_end,
-      "dhcp_hosts" => new_resource.dhcp_hosts
+      "dhcp_hosts" => new_resource.dhcp_hosts,
+      "dns_enable" => new_resource.dns_enable,
+      "dns_forwarders" => new_resource.dns_forwarders,
+      "dns_hosts" => new_resource.dns_hosts
     )
 
     notifies :run, "bash[virsh_net_create_#{new_resource.name}]", :immediately
@@ -74,13 +78,17 @@ action :define do
       "name" => new_resource.name,
       "uuid" => new_resource.uuid,
       "mac" => new_resource.mac,
+      "domain" => new_resource.domain,
       "bridge" => new_resource.bridge,
       "ip" => new_resource.ip,
       "netmask" => new_resource.netmask,
       "dhcp_enable" => new_resource.dhcp_enable,
       "dhcp_start" => new_resource.dhcp_start,
       "dhcp_end" => new_resource.dhcp_end,
-      "dhcp_hosts" => new_resource.dhcp_hosts
+      "dhcp_hosts" => new_resource.dhcp_hosts,
+      "dns_enable" => new_resource.dns_enable,
+      "dns_forwarders" => new_resource.dns_forwarders,
+      "dns_hosts" => new_resource.dns_hosts
     )
 
     notifies :run, "bash[virsh_net_define_#{new_resource.name}]", :immediately
