@@ -136,14 +136,16 @@ template node["libvirt"]["daemon"]["virtlockd_file"] do
   end
 end
 
-group node["libvirt"]["daemon"]["group"] do
-  members node["libvirt"]["daemon"]["users"]
-  append true
+node["libvirt"]["daemon"]["groups"].each do |name|
+  group name do
+    members node["libvirt"]["daemon"]["users"]
+    append true
 
-  action :manage
+    action :manage
 
-  not_if do
-    node["libvirt"]["daemon"]["users"].empty?
+    not_if do
+      node["libvirt"]["daemon"]["users"].empty?
+    end
   end
 end
 

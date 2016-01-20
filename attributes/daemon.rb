@@ -28,7 +28,7 @@ default["libvirt"]["daemon"]["sysconfig_file"] = value_for_platform_family(
 )
 
 default["libvirt"]["daemon"]["users"] = %w()
-default["libvirt"]["daemon"]["group"] = "libvirt"
+default["libvirt"]["daemon"]["groups"] = %w(libvirt qemu)
 
 default["libvirt"]["daemon"]["config_file"] = "/etc/libvirt/libvirtd.conf"
 default["libvirt"]["daemon"]["libvirt_file"] = "/etc/libvirt/libvirt.conf"
