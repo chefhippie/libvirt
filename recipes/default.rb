@@ -29,6 +29,33 @@ include_recipe "libvirt::cert"
 include_recipe "libvirt::daemon"
 include_recipe "libvirt::guests"
 
+remote_file node["libvirt"]["hook"]["script"] do
+  source "https://raw.githubusercontent.com/saschpe/libvirt-hook-qemu/master/qemu"
+  owner "root"
+  group "root"
+  mode 0755
+end
+
+remote_file node["libvirt"]["hook"]["schema"] do
+  source "https://raw.githubusercontent.com/saschpe/libvirt-hook-qemu/master/qemu.schema.json"
+  owner "root"
+  group "root"
+  mode 0644
+end
+
+template node["libvirt"]["hook"]["json"] do
+  source "qemu.json.erb"
+  owner "root"
+  group "root"
+  mode 0644
+
+  variables(
+    "mappings" => node["libvirt"]["mappings"]
+  )
+
+  notifies :restart, "service[libvirt-daemon]"
+end
+
 node["libvirt"]["networks"].each do |name, data|
   (data["action"] ? data["action"].map(&:to_sym) : [:define]).each do |current_action|
     libvirt_network name do

@@ -37,3 +37,4 @@ default["libvirt"]["packages"] = value_for_platform_family(
 default["libvirt"]["networks"] = {}
 default["libvirt"]["nodes"] = {}
 default["libvirt"]["pools"] = {}
+default["libvirt"]["mappings"] = {}
