@@ -7,6 +7,6 @@
         "tcp": <%= (data["tcp"] || []).inspect %>,
         "udp": <%= (data["udp"] || []).inspect %>
       }
-    },
+    }<%- unless @mappings.keys.last == name -%>,<%- end -%>
   <%- end -%>
 }
