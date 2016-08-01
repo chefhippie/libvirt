@@ -29,22 +29,30 @@ include_recipe "libvirt::cert"
 include_recipe "libvirt::daemon"
 include_recipe "libvirt::guests"
 
-remote_file node["libvirt"]["hook"]["script"] do
-  source "https://raw.githubusercontent.com/saschpe/libvirt-hook-qemu/master/qemu"
-  owner "root"
-  group "root"
-  mode 0755
-end
-
 remote_file node["libvirt"]["hook"]["schema"] do
-  source "https://raw.githubusercontent.com/saschpe/libvirt-hook-qemu/master/qemu.schema.json"
+  source "https://raw.githubusercontent.com/saschpe/libvirt-hook-qemu/master/hooks.schema.json"
   owner "root"
   group "root"
   mode 0644
 end
 
+remote_file node["libvirt"]["hook"]["script"] do
+  source "https://raw.githubusercontent.com/saschpe/libvirt-hook-qemu/master/hooks"
+  owner "root"
+  group "root"
+  mode 0755
+end
+
+link node["libvirt"]["hook"]["script"] do
+  to "/etc/libvirt/hooks/qemu"
+end
+
+link node["libvirt"]["hook"]["script"] do
+  to "/etc/libvirt/hooks/lxc"
+end
+
 template node["libvirt"]["hook"]["json"] do
-  source "qemu.json.erb"
+  source "hooks.json.erb"
   owner "root"
   group "root"
   mode 0644

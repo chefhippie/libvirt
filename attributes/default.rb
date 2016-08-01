@@ -34,9 +34,9 @@ default["libvirt"]["packages"] = value_for_platform_family(
   )
 )
 
-default["libvirt"]["hook"]["script"] = "/etc/libvirt/hooks/qemu"
-default["libvirt"]["hook"]["schema"] = "/etc/libvirt/hooks/qemu.schema.json"
-default["libvirt"]["hook"]["json"] = "/etc/libvirt/hooks/qemu.json"
+default["libvirt"]["hook"]["script"] = "/etc/libvirt/hooks/hooks"
+default["libvirt"]["hook"]["schema"] = "/etc/libvirt/hooks/hooks.schema.json"
+default["libvirt"]["hook"]["json"] = "/etc/libvirt/hooks/hooks.json"
 
 default["libvirt"]["networks"] = {}
 default["libvirt"]["nodes"] = {}
