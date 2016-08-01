@@ -5,7 +5,8 @@
       "private_ip": "<%= data["ip"] %>",
       "port_map": {
         "tcp": <%= (data["tcp"] || []).inspect %>,
-        "udp": <%= (data["udp"] || []).inspect %>
+        "udp": <%= (data["udp"] || []).inspect %>,
+        "icmp": <%= (data["icmp"] || []).inspect %>
       }
     }<%- unless @mappings.keys.last == name -%>,<%- end -%>
   <%- end -%>
