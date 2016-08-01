@@ -43,12 +43,12 @@ remote_file node["libvirt"]["hook"]["script"] do
   mode 0755
 end
 
-link node["libvirt"]["hook"]["script"] do
-  to "/etc/libvirt/hooks/qemu"
+link "/etc/libvirt/hooks/qemu" do
+  to node["libvirt"]["hook"]["script"]
 end
 
-link node["libvirt"]["hook"]["script"] do
-  to "/etc/libvirt/hooks/lxc"
+link "/etc/libvirt/hooks/lxc" do
+  to node["libvirt"]["hook"]["script"]
 end
 
 template node["libvirt"]["hook"]["json"] do
